@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://c3jwmx8xbes64"]
+
+[ext_resource type="Script" uid="uid://wg1r3r0hw2x1" path="res://scripts/player_movement.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://c6lvoqh2pnye0" path="res://icon.svg" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://cni0vv7ohdi5e" path="res://scripts/apply_rot.gd" id="3_tuyoq"]
+[ext_resource type="Script" uid="uid://bd248fptob3s5" path="res://scripts/aim_node.gd" id="4_fjrip"]
+[ext_resource type="Script" uid="uid://cye5uajgifqqs" path="res://scripts/look_at_cursor.gd" id="5_smehm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dqkch"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_g2els")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dqkch")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(0, -1.9073486e-06)
+scale = Vector2(0.15625001, 0.15625004)
+texture = ExtResource("2_qhqgy")
+
+[node name="ApplyRot" type="Node" parent="." node_paths=PackedStringArray("aim_node")]
+script = ExtResource("3_tuyoq")
+aim_node = NodePath("AimNode")
+metadata/_custom_type_script = "uid://cni0vv7ohdi5e"
+
+[node name="AimNode" type="Node" parent="ApplyRot" node_paths=PackedStringArray("root", "point_1", "point_2", "aim_at")]
+script = ExtResource("4_fjrip")
+root = NodePath("../..")
+point_1 = NodePath("../../Sprite2D/Barrel")
+point_2 = NodePath("../../Sprite2D/Firepoint")
+aim_at = NodePath("LookAtCursor")
+metadata/_custom_type_script = "uid://bd248fptob3s5"
+
+[node name="LookAtCursor" type="Node2D" parent="ApplyRot/AimNode"]
+script = ExtResource("5_smehm")
+metadata/_custom_type_script = "uid://cye5uajgifqqs"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(6.9574146, -5.696369)
+rotation = 1.067573
+scale = Vector2(0.13623372, 0.041273847)
+texture = ExtResource("2_qhqgy")
+
+[node name="Firepoint" type="Node2D" parent="Sprite2D"]
+position = Vector2(-63.99, 0)
+
+[node name="Barrel" type="Node2D" parent="Sprite2D"]
