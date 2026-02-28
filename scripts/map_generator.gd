@@ -1,4 +1,3 @@
-@tool
 extends Node
 class_name MapGenerator
 
@@ -19,7 +18,7 @@ const CORE_ROOM_DATA: Array = [
 		"count": 1,
 		"min_size": 20,
 		"max_size": 25,
-		"scene": ""
+		"scene": preload("res://scenes/elevator_out.tscn")
 	},
 	{
 		"type": RoomBlueprint.ROOM_TYPE.GENERATOR,
@@ -31,13 +30,14 @@ const CORE_ROOM_DATA: Array = [
 ]
 
 const CORE_ROOM_PADDING: int = 20 
+var elevator_scene : PackedScene = preload("res://scenes/elevator_out.tscn")
 
 @export var map_dimensions = Vector2i(100,100)
 @export var room_count : int = 12
 @export var room_min_size : int = 6
 @export var room_max_size : int = 12
 @export var room_padding : int = 1
-@export_tool_button("Generate Map") var map_gen_button = generate_map
+@export var extra_connections : int = 5
 @export var tilemap_layer : TileMapLayer
 
 func _ready() -> void:
@@ -52,6 +52,8 @@ func generate_map() -> void:
 	var corridors = generate_mst_connections(room_array)
 	for corridor in corridors:
 		carve_corridor(corridor[0], corridor[1])
+	
+	core_room_furnishings(room_array)
 
 func draw_tile_rect(dimensions: Vector2i, source_id: int, atlas_coords:Vector2i) -> void:
 	for x in range(dimensions.x):
@@ -82,7 +84,7 @@ func generate_core_rooms(
 				var y = rng.randi_range(1, map_dim.y - h - 2)
 
 				var new_room = RoomBlueprint.new(
-					RoomBlueprint.ROOM_TYPE.BASIC, 
+					core_room_type.type, 
 					Rect2i(x, y, w, h), 
 					Vector2i(
 						x + w / 2, 
@@ -153,6 +155,7 @@ func generate_mst_connections(
 	for room in rooms:
 		centers.append(room.room_center)
 
+	# Minimum number of connections
 	var connected: Array[int] = [0]
 	var remaining: Array[int] = []
 
@@ -178,6 +181,18 @@ func generate_mst_connections(
 
 		connected.append(best_to) 
 		remaining.erase(best_to)
+
+	#random extra connections
+	for i in range(extra_connections):
+		var new_connection = [centers.pick_random(), centers.pick_random()]
+		while true:
+			if new_connection in connections:
+				new_connection = [centers.pick_random(), centers.pick_random()]
+			else:
+				connections.append(new_connection)
+				break
+		
+	
 	return connections
 
 func carve_rooms(
@@ -210,3 +225,13 @@ func carve_h_line(x1:int, x2:int, y:int) -> void:
 func carve_v_line(y1:int, y2:int, x:int) -> void:
 	for y in range(min(y1, y2), max(y1, y2) + 1):
 		tilemap_layer.set_cell(Vector2i(x,y), TILE_DATA.floor.source_id, TILE_DATA.floor.atlas_coords)
+
+func core_room_furnishings(rooms : Array[RoomBlueprint]) -> void:
+	print("ello")
+	for room in rooms:
+		if room.type == RoomBlueprint.ROOM_TYPE.ELEVATOR:
+			var elevator = elevator_scene.instantiate()
+			elevator.position = room.room_center*32
+			print("ello agaoin")
+			get_parent().add_child.call_deferred(elevator)
+			
