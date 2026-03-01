@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://cmeboefy0bxf"]
+
+[ext_resource type="Texture2D" uid="uid://cyek46x7nt1v3" path="res://images/Generator.png" id="1_5yxne"]
+[ext_resource type="Script" uid="uid://b140ioi4i88bi" path="res://scenes/generator.gd" id="1_ef8yp"]
+[ext_resource type="Script" uid="uid://cjikhkgww058r" path="res://scripts/interaction_area.gd" id="2_w5vnv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w5vnv"]
+size = Vector2(132, 73)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ef8yp"]
+size = Vector2(173, 110)
+
+[node name="Generator" type="StaticBody2D" node_paths=PackedStringArray("interaction_area")]
+script = ExtResource("1_ef8yp")
+interaction_area = NodePath("InteractionArea")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -7.5)
+shape = SubResource("RectangleShape2D_w5vnv")
+
+[node name="Generator" type="Sprite2D" parent="."]
+scale = Vector2(2.28125, 2.28125)
+texture = ExtResource("1_5yxne")
+
+[node name="InteractionArea" type="Area2D" parent="." node_paths=PackedStringArray("display_ui")]
+script = ExtResource("2_w5vnv")
+display_ui = NodePath("Label")
+hold_time = 3.0
+metadata/_custom_type_script = "uid://cjikhkgww058r"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(-0.5, -5)
+shape = SubResource("RectangleShape2D_ef8yp")
+
+[node name="Label" type="Label" parent="InteractionArea"]
+offset_left = -55.0
+offset_top = -25.0
+offset_right = 57.0
+offset_bottom = 24.0
+theme_override_font_sizes/font_size = 10
+text = "Turn on the Generator 
+Hold (E)"
+horizontal_alignment = 1

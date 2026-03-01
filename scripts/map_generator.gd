@@ -25,12 +25,13 @@ const CORE_ROOM_DATA: Array = [
 		"count": 3,
 		"min_size": 15,
 		"max_size": 20,
-		"scene": ""
+		"scene": preload("res://scenes/generator.tscn")
 	}
 ]
 
 const CORE_ROOM_PADDING: int = 20 
 var elevator_scene : PackedScene = preload("res://scenes/elevator_out.tscn")
+var generator_scene : PackedScene = preload("res://scenes/generator.tscn")
 
 @export var map_dimensions = Vector2i(100,100)
 @export var room_count : int = 12
@@ -227,11 +228,14 @@ func carve_v_line(y1:int, y2:int, x:int) -> void:
 		tilemap_layer.set_cell(Vector2i(x,y), TILE_DATA.floor.source_id, TILE_DATA.floor.atlas_coords)
 
 func core_room_furnishings(rooms : Array[RoomBlueprint]) -> void:
-	print("ello")
 	for room in rooms:
-		if room.type == RoomBlueprint.ROOM_TYPE.ELEVATOR:
-			var elevator = elevator_scene.instantiate()
-			elevator.position = room.room_center*32
-			print("ello agaoin")
-			get_parent().add_child.call_deferred(elevator)
+		match room.type:
+			RoomBlueprint.ROOM_TYPE.ELEVATOR:
+				var elevator = elevator_scene.instantiate()
+				elevator.position = room.room_center*32
+				get_parent().add_child.call_deferred(elevator)
+			RoomBlueprint.ROOM_TYPE.GENERATOR:
+				var generator = generator_scene.instantiate()
+				generator.position = room.room_center*32
+				get_parent().add_child.call_deferred(generator)
 			

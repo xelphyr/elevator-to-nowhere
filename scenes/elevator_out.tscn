@@ -1,14 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://bb5h1ty17nxwp"]
+[gd_scene load_steps=6 format=3 uid="uid://bb5h1ty17nxwp"]
 
 [ext_resource type="Texture2D" uid="uid://dvjfw2kqy3v73" path="res://images/Elevator_out.png" id="1_dyjra"]
 [ext_resource type="Script" uid="uid://m8ws2xu3c7uj" path="res://scripts/move_player_to_start.gd" id="1_gb7mt"]
+[ext_resource type="Script" uid="uid://cjikhkgww058r" path="res://scripts/interaction_area.gd" id="3_kb5o4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gb7mt"]
 size = Vector2(131, 128)
 
-[node name="ElevatorOut" type="StaticBody2D" node_paths=PackedStringArray("start_pos")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_isyd0"]
+size = Vector2(28, 76)
+
+[node name="ElevatorOut" type="StaticBody2D" node_paths=PackedStringArray("start_pos", "interaction_area")]
 script = ExtResource("1_gb7mt")
 start_pos = NodePath("Node2D")
+interaction_area = NodePath("InteractionArea")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3.5, 0)
@@ -21,3 +26,14 @@ texture = ExtResource("1_dyjra")
 
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2(83, 2)
+
+[node name="InteractionArea" type="Area2D" parent="."]
+monitoring = false
+script = ExtResource("3_kb5o4")
+metadata/_custom_type_script = "uid://cjikhkgww058r"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(75, 3)
+shape = SubResource("RectangleShape2D_isyd0")
+
+[connection signal="activated" from="InteractionArea" to="." method="_on_interaction_area_activated"]

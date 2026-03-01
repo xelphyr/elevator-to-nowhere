@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=4 uid="uid://crdagyo818k2i"]
+[gd_scene load_steps=7 format=4 uid="uid://crdagyo818k2i"]
 
+[ext_resource type="Script" uid="uid://og2r8tuwbxo3" path="res://scripts/round_manager.gd" id="1_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://c3jwmx8xbes64" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://x7jjbticbvxv" path="res://scripts/map_generator.gd" id="2_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://cxvdq5ug17ssv" path="res://images/testtilemap.png" id="3_lbhrr"]
@@ -17,6 +18,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_iywne")
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_lbhrr")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 scale = Vector2(32, 32)
@@ -27,6 +29,7 @@ tile_set = SubResource("TileSet_p57ef")
 position = Vector2(490, 379)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
+scale = Vector2(0.99855566, 1)
 zoom = Vector2(1.655, 1.655)
 position_smoothing_enabled = true
 
