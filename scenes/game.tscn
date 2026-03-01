@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=4 uid="uid://crdagyo818k2i"]
+[gd_scene load_steps=8 format=4 uid="uid://crdagyo818k2i"]
 
 [ext_resource type="Script" uid="uid://og2r8tuwbxo3" path="res://scripts/round_manager.gd" id="1_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://c3jwmx8xbes64" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Script" uid="uid://x7jjbticbvxv" path="res://scripts/map_generator.gd" id="2_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://cxvdq5ug17ssv" path="res://images/testtilemap.png" id="3_lbhrr"]
+[ext_resource type="Script" uid="uid://c4p17ijnltah0" path="res://scenes/game_ui.gd" id="5_iywne"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iywne"]
 texture = ExtResource("3_lbhrr")
@@ -40,3 +41,19 @@ room_padding = 4
 extra_connections = 7
 tilemap_layer = NodePath("../TileMapLayer")
 metadata/_custom_type_script = "uid://x7jjbticbvxv"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("5_iywne")
+
+[node name="Generator" type="Label" parent="CanvasLayer"]
+offset_top = 23.0
+offset_right = 121.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(0.46618086, 0.4661808, 0.4661808, 1)
+text = "Generators: 0/3"
+
+[node name="Floor" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0.46618086, 0.4661808, 0.4661808, 1)
+text = "Floor: -1"

@@ -15,6 +15,7 @@ script = ExtResource("1_g2els")
 shape = SubResource("CircleShape2D_dqkch")
 
 [node name="Icon" type="Sprite2D" parent="."]
+z_index = 1
 position = Vector2(0, -1.9073486e-06)
 scale = Vector2(0.15625001, 0.15625004)
 texture = ExtResource("2_qhqgy")
@@ -37,6 +38,7 @@ script = ExtResource("5_smehm")
 metadata/_custom_type_script = "uid://cye5uajgifqqs"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
 position = Vector2(6.9574146, -5.696369)
 rotation = 1.067573
 scale = Vector2(0.13623372, 0.041273847)

@@ -39,5 +39,5 @@ offset_right = 57.0
 offset_bottom = 24.0
 theme_override_font_sizes/font_size = 10
 text = "Turn on the Generator 
-Hold (E)"
+Hold (E) for 3s"
 horizontal_alignment = 1
